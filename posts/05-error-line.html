@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>报错指向的那一行，不一定是出错的那一行</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="../index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="../index.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>报错指向的那一行，不一定是出错的那一行</h1>
+  <div class="dateline">2026-10-25 · 调试 · 编译错误</div>
+
+  <p>写学生成绩评定那道题的时候，编译器给我报了这么一句：</p>
+
+<pre><code>error: expected identifier or '(' before '{'</code></pre>
+
+  <p>后面跟着行号，指向我的第 5 行。我打开第 5 行，就一个孤零零的左大括号 <code>{</code>。</p>
+
+  <p>我看了半天。大括号有什么错？它就是个大括号啊。</p>
+
+  <h2>真凶在上一行</h2>
+
+  <p>我的第 4 行是这样写的：</p>
+
+<pre><code>int main();</code></pre>
+
+  <p>看到末尾那个分号了吗？<strong>多出来的。</strong></p>
+
+  <p>这一个分号，把整句话的意思彻底改了：</p>
+
+  <ul>
+    <li><code>int main()</code> —— 这是"定义一个函数"，后面要跟着函数的内容（用大括号包起来）。</li>
+    <li><code>int main();</code> —— 这是"声明一下有这么个函数"，是一句<strong>完整的话</strong>，到这里就结束了。</li>
+  </ul>
+
+  <p>于是尴尬的事情发生了：第 5 行那个 <code>{</code>，本来应该是 main 函数的大门，现在它前面那句话已经说完了，它就成了<strong>一个无家可归的大括号</strong>——孤零零地待在文件的顶层。编译器走到这儿，满脑子问号："你在这儿开门，是要开谁的门？"所以报了那个错。</p>
+
+  <p>它报错的地点（第 5 行）是"它觉得不对劲的地方"，而真正的病因（第 4 行多写的分号）在它<strong>上一行</strong>。</p>
+
+  <div class="box box-warn">
+    <span class="label">我踩的坑</span>
+    <p>死盯着报错行号找问题。报错的位置是"症状出现的地方"，不一定是"病根所在的地方"。</p>
+  </div>
+
+  <h2>一个能救命的习惯</h2>
+
+  <p>拿到编译错误，按这个顺序看：</p>
+
+  <ol>
+    <li>看报错行号，读那一行。</li>
+    <li><strong>往上倒一行</strong>，看它的上一行有没有写完整——是不是少了个括号？多了个分号？</li>
+    <li>如果还找不到，再往上倒两行。函数定义、<code>if</code>、<code>for</code> 这类"带大括号"的语句，它的头部最值得怀疑。</li>
+  </ol>
+
+  <h2>配套的另一个笨办法：数大括号</h2>
+
+  <p>我写 if-else 嵌套的时候老是把大括号写散架，后来学了个土办法——<strong>加减法计数</strong>：</p>
+
+  <ul>
+    <li>从文件第一行开始，遇到 <code>{</code> 就 +1，遇到 <code>}</code> 就 -1。</li>
+    <li>数到文件最后一行，结果<strong>必须刚好是 0</strong>。</li>
+    <li>如果最后是负数，比如 -2，说明你多写了 2 个 <code>}</code>。</li>
+    <li>如果中途变成负数，那第一个变负的地方就是多出来的那个 <code>}</code>。</li>
+  </ul>
+
+  <p>还有一条：<strong>语句必须住在函数身体里</strong>。我有一次把 <code>printf</code> 写到了 main 的结束大括号外面，程序直接不认识它了。道理一样——大括号外面是"公共区域"，不能随便摆代码。</p>
+
+  <div class="box box-tip">
+    <span class="label">记住这一条</span>
+    <p>编译器告诉你的是"我在第几行懵了"，不是"你在第几行写错了"。它懵的地方往往在错误之后。往上倒一行看看，八成能找到。</p>
+  </div>
+
+  <a class="back" href="../index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>改了代码，为什么运行结果没变？</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="../index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="../index.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>改了代码，为什么运行结果没变？</h1>
+  <div class="dateline">2026-10-20 · C 语言 · 初学者</div>
+
+  <p>这道题是算自由落体位移的，输入时间 <code>t</code>，输出下落距离。我写完第一版，跑了，输入 6，屏幕上蹦出来 <strong>180</strong>。</p>
+
+  <p>180 不对。我拿着计算器按了一遍，正确结果应该是 176.4 才对。</p>
+
+  <h2>我以为是我公式写错了</h2>
+
+  <p>第一反应当然是怀疑公式。我打开代码，把里面的 <code>1/2*g*t*t</code> 改成了别的写法，又加了个括号，信心满满地重新运行。</p>
+
+  <p>输入 6。</p>
+
+  <p>屏幕上还是 <strong>180</strong>。</p>
+
+  <p>我愣住了。我又改了一次，这次改得很夸张——直接把公式换成一个完全不相干的数。再跑。</p>
+
+  <p>还是 180。</p>
+
+  <p>这一下我就知道，问题不在公式上了。一个公式无论怎么改结果都不变，说明<strong>我跑的根本不是我改的那个东西</strong>。</p>
+
+  <h2>三件我以为是一件事的事</h2>
+
+  <p>后来我才搞明白，我以为的"改代码然后运行"，其实是三个独立的步骤：</p>
+
+  <ol>
+    <li><strong>编辑</strong>：在编辑器里改 <code>.c</code> 文件。这一步改的是<em>源代码</em>，一个纯文本文件。</li>
+    <li><strong>编译</strong>：用 <code>gcc</code> 把 <code>.c</code> 翻译成电脑能直接跑的 <code>.exe</code> 文件。</li>
+    <li><strong>运行</strong>：执行那个 <code>.exe</code>。</li>
+  </ol>
+
+  <p>关键就在这儿：<strong>第 3 步跑的是 .exe，不是 .c。</strong> 我改了 .c，但忘了重新编译，那个 .exe 还是上一次生成的旧版本。所以我改多少次都没用，跑的都是老程序。</p>
+
+  <p>打个比方：.c 是菜谱，.exe 是照着菜谱做好的菜。我把菜谱上的盐改了，但端上桌的还是昨天那盘已经做好的菜——它当然不会变。</p>
+
+  <h2>正确的流程</h2>
+
+  <p>每次改完源代码，都要重新编译一次。在终端里（MinGW 环境）：</p>
+
+<pre><code>gcc hello.c -o hello.exe
+hello.exe</code></pre>
+
+  <p><code>-o</code> 是 output 的缩写，后面跟的是"生成的文件叫什么名字"。所以这行命令的意思是：把 <code>hello.c</code> 编译成 <code>hello.exe</code>。</p>
+
+  <div class="box box-warn">
+    <span class="label">我踩的坑</span>
+    <p>改了 .c 文件之后直接运行旧的 .exe —— 结果永远不变，还会让人误以为是逻辑写错了，白白浪费半小时去查一个根本不存在的问题。</p>
+  </div>
+
+  <h2>顺便说：后来 180 是怎么来的</h2>
+
+  <p>重新编译之后，输出变了，但变成了一个更奇怪的数。查下去才发现是另一个坑——<code>1/2</code> 在 C 语言里等于 0，不是 0.5。这个是下一篇的内容。</p>
+
+  <div class="box box-tip">
+    <span class="label">记住这一条</span>
+    <p>编辑、编译、运行，是三件事。改了源码就必须重新编译，否则你在跟一个过去的自己在对话。</p>
+  </div>
+
+  <a class="back" href="../index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于 · YvonneHuang 的编程笔记</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="index.html">文章</a>
+        <a href="about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>关于这个博客</h1>
+  <div class="dateline">2026-10-26</div>
+
+  <h2>我是谁</h2>
+
+  <p>一个编程零基础的初学者。2026 年秋天开始学 C 语言，用 MinGW 里的 <code>gcc</code> 编译，在 OJ（在线判题系统）上一道一道地做题。</p>
+
+  <p>我踩过的坑包括但不限于：忘了重新编译、<code>scanf</code> 少写 <code>&amp;</code> 导致程序崩溃、被整数除法坑到物理题算出 0、因为多打一个空格被判答案错误、大括号写散架……</p>
+
+  <p>这些坑每一个都让我卡住过至少半小时，但它们也确实让我记住了东西。所以我把它们写下来。</p>
+
+  <h2>为什么写这个</h2>
+
+  <p>网上大部分教程是"正确的做法是什么"，很少有人写"错的时候是什么样子、当时是怎么想的"。</p>
+
+  <p>但我觉得后者更值钱。知道 <code>1/2</code> 等于 0 是一回事，<strong>在某个具体题目里因为 <code>1/2</code> 拿到一个 0、然后一步步把它挖出来</strong>是另一回事。后者才会在脑子里留下痕迹。</p>
+
+  <p>所以这里记的不是知识点，是<strong>当时发生了什么</strong>。</p>
+
+  <h2>这个博客是怎么搭起来的</h2>
+
+  <p>纯静态网站，手写 HTML + CSS，没有用任何博客框架或生成器。原因很实在：我是新手，我不想让"配环境"这件事挡在我和"把文章发出去"之间。</p>
+
+  <p>文章内容是我自己的真实经历，在 AI 助手的帮助下整理成文、排版成网页。代码托管在 GitHub，通过 GitHub Pages 发布。</p>
+
+  <div class="box box-tip">
+    <span class="label">想改哪里</span>
+    <p>整个站只有 3 类文件：根目录的 <code>index.html</code>（首页）和 <code>about.html</code>（本页），<code>posts/</code> 里的文章页，<code>assets/style.css</code>（样式）。想加新文章，复制一篇 <code>posts/</code> 里的文件改内容，再到首页的列表里加一项就行。</p>
+  </div>
+
+  <a class="back" href="index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

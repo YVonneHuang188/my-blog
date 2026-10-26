@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scanf 里那个 &amp;，到底是什么东西？</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="../index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="../index.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>scanf 里那个 &amp;，到底是什么东西？</h1>
+  <div class="dateline">2026-10-21 · C 语言 · 指针入门</div>
+
+  <p>学输入的时候，教材上写的是这样的：</p>
+
+<pre><code>int r;
+scanf("%d", &amp;r);</code></pre>
+
+  <p>我照抄没问题。但有一次我手快，写成了：</p>
+
+<pre><code>scanf("%d", r);   /* 少了 &amp; */</code></pre>
+
+  <p>编译居然通过了，还给了个警告我没看懂。程序一运行，<strong>直接崩溃</strong>。终端里冒出来一行 <code>SIGTRAP</code>，我完全不知道那是什么。</p>
+
+  <h2>&amp; 是"取地址"</h2>
+
+  <p>这个符号念作"and"，但在变量前面它不是"和"的意思，它的意思是<strong>取地址</strong>——拿到这个变量在内存里住在哪儿。</p>
+
+  <p>为什么非要地址？打个比方：</p>
+
+  <p>你要让快递员把一个包裹放进你家的柜子。你跟他说"柜子是空的"，他听懂了，但他<strong>不知道你家在哪儿</strong>，包裹就送不到。你必须告诉他地址。</p>
+
+  <p><code>scanf</code> 就是这个快递员。它的工作是"把你从键盘敲进去的数，放回到某个变量里"。所以它需要两样东西：</p>
+
+  <ul>
+    <li>第一个参数 <code>"%d"</code>：告诉它包裹是什么类型的（一个整数）。</li>
+    <li>第二个参数：变量<strong>在哪儿</strong>。也就是地址。</li>
+  </ul>
+
+  <p>如果你直接写 <code>r</code>，给它的是柜子里现在装的东西（而且 <code>r</code> 还没初始化，里面是个随机垃圾值）。<code>scanf</code> 拿着这个垃圾值当地址去找，找到了一个根本不属于它的内存位置，往里写东西——操作系统一看，"你在乱动别人的地盘"，直接把程序掐掉。这就是崩溃。</p>
+
+  <div class="box box-warn">
+    <span class="label">我踩的坑</span>
+    <p>少写一个 <code>&amp;</code>，程序运行时崩溃（SIGTRAP）。这类错误编译器不一定拦得住，它可能只是警告一下就让你过了，然后崩给你看。</p>
+  </div>
+
+  <h2>顺便：printf 为什么不用加 &amp;</h2>
+
+  <p>我当时还糊涂过这个：<code>scanf</code> 要 <code>&amp;r</code>，<code>printf</code> 却直接写 <code>r</code>？</p>
+
+  <p>因为它们的活儿不一样：</p>
+
+  <ul>
+    <li><code>scanf</code> 是<strong>写入</strong>——它要往变量里放东西，所以它得知道变量在哪儿 → 要地址。</li>
+    <li><code>printf</code> 是<strong>读取</strong>——它只要把变量现在的值打印出来，给我值就够了 → 不用地址。</li>
+  </ul>
+
+  <h2>还有一个配套的小坑</h2>
+
+  <p><code>double</code> 类型（带小数的数）在这儿还有个额外讲究：</p>
+
+<pre><code>double r;
+scanf("%lf", &amp;r);    /* 读入用 %lf，lf = long float */
+printf("%f", r);     /* 打印用 %f 就够了 */</code></pre>
+
+  <p>同一个变量，读和打印用的格式符居然不一样，我一开始觉得这设计真别扭。原因跟 C 语言函数传参的规则有关（<code>float</code> 传进去会自动变 <code>double</code>），先记住这个结论就行。</p>
+
+  <div class="box box-tip">
+    <span class="label">记住这一条</span>
+    <p>凡是要"把结果写回某个变量"的函数，都要给地址，也就是变量名前面加 <code>&amp;</code>。<code>scanf</code> 是最常遇到的一个。</p>
+  </div>
+
+  <a class="back" href="../index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

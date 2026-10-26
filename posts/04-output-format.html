@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一个空格引发的「答案错误」</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="../index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="../index.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>一个空格引发的「答案错误」</h1>
+  <div class="dateline">2026-10-24 · OJ · 输出格式</div>
+
+  <p>这道题要求输出排好序的三个数，样例输出长这样：</p>
+
+<pre><code>a=1,b=2,c=4</code></pre>
+
+  <p>我的程序跑出来是这样：</p>
+
+<pre><code>a=1,b=2,c=4</code></pre>
+
+  <p>我盯着这两个看了足足一分钟，一模一样。提交上去，<strong>答案错误</strong>。</p>
+
+  <h2>它不是一个人在看你的输出</h2>
+
+  <p>后来我才知道，OJ 判题不是"看着差不多就给过"，它是<strong>一个字符一个字符地比对</strong>的。你的输出和它的标准答案，必须每一个字符都完全相同——包括空格。</p>
+
+  <p>我当时那次实际输出的是：</p>
+
+<pre><code>a=1, b=2, c=4</code></pre>
+
+  <p>逗号后面我习惯性地加了个空格，因为这样"好看"。对人眼来说它和答案没区别，对机器来说它多了两个字符，就是错。</p>
+
+  <div class="box box-warn">
+    <span class="label">我踩的坑</span>
+    <p>凭"看着一样"判断输出对不对。人的眼睛会自动忽略空格，机器不会。</p>
+  </div>
+
+  <h2>解决办法：数格子</h2>
+
+  <p>后来我养成了一个笨办法，但很管用——<strong>把两个输出上下对齐，一个字符一个字符地数</strong>：</p>
+
+<pre><code>标准:  a  =  1  ,  b  =  2  ,  c  4
+我的:  a  =  1  ,  _  b  =  2  ...</code></pre>
+
+  <p>一个格子一个格子对下去，多出来的那个空格根本藏不住。</p>
+
+  <p>还有个更省事的招：如果题目给了样例，就把样例输出直接复制下来，粘到代码里当参照物，照着它一个字符一个字符地写 <code>printf</code> 的格式串。</p>
+
+  <h2>我在这上面栽了两次</h2>
+
+  <p>你以为吃一次亏就记住了？并没有。</p>
+
+  <p>第二次是一道成绩评定的题，输出应该是 <code>score:90</code>（冒号后面紧跟数字）。我写成了 <code>score: 90</code>，冒号后多了一个空格。<strong>整道题全错。</strong></p>
+
+  <p>同一个坑，不同位置，我又掉进去一次。</p>
+
+  <div class="box box-tip">
+    <span class="label">记住这一条</span>
+    <p><code>printf</code> 双引号里面写的每一个字符，包括空格、逗号、冒号、换行，都会被原封不动地输出出去。格式串里没有"随便"这回事。看到输出不符，先别怀疑算法，先去数格子。</p>
+  </div>
+
+  <a class="back" href="../index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

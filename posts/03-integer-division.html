@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 除以 2 居然等于 0</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="../index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="../index.html">文章</a>
+        <a href="../about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<article>
+  <h1>1 除以 2 居然等于 0</h1>
+  <div class="dateline">2026-10-22 · C 语言 · 数据类型</div>
+
+  <p>接上一篇。我把编译问题解决了，程序终于肯跑新代码了。然后输出变成了 <strong>0</strong>。</p>
+
+  <p>不管我输入什么时间，结果永远是 0。物理量算出来是 0，这在现实里说不通。</p>
+
+  <h2>我一开始怀疑公式</h2>
+
+  <p>自由落体的位移公式是 <code>s = ½ · g · t²</code>。我写的是：</p>
+
+<pre><code>s = 1/2 * g * t * t;</code></pre>
+
+  <p>我翻了书，公式没错。g 我定义成 9.8，t 是输入的 6，哪个都不该是 0。</p>
+
+  <p>然后我做了一件现在看来很对的事：<strong>不猜了，直接打印出来看。</strong>我单独加了一行：</p>
+
+<pre><code>printf("%d\n", 1/2);</code></pre>
+
+  <p>输出：</p>
+
+<pre><code>0</code></pre>
+
+  <h2>原因：整数除法会直接把小数扔掉</h2>
+
+  <p>C 语言里，两个数做除法，结果是什么类型，<strong>取决于这两个数本身是什么类型</strong>，而不是取决于"数学上应该等于多少"。</p>
+
+  <ul>
+    <li><code>1</code> 是整数，<code>2</code> 是整数。</li>
+    <li>整数 ÷ 整数 = 整数。</li>
+    <li><code>1/2</code> 数学上是 0.5，但作为整数，它只能是 0。</li>
+    <li>小数部分<strong>直接砍掉</strong>，不是四舍五入。</li>
+  </ul>
+
+  <p>所以整条式子就变成了：</p>
+
+<pre><code>s = 0 * 9.8 * 6 * 6;   /* 0 乘以任何数都是 0 */</code></pre>
+
+  <p>整个公式被最前面那个 0 给吃掉了。</p>
+
+  <div class="box box-warn">
+    <span class="label">我踩的坑</span>
+    <p>把数学公式直接照抄进代码。<code>1/2</code> 在纸上和在计算机里不是一回事——计算机先问"这俩数是什么类型"，再决定怎么算。</p>
+  </div>
+
+  <h2>怎么改</h2>
+
+  <p>只要让参与运算的数里<strong>有一个是小数</strong>，结果就会变成小数。随便挑一种：</p>
+
+<pre><code>s = 1.0/2 * g * t * t;    /* 把 1 写成 1.0 */
+s = 0.5 * g * t * t;      /* 直接写 0.5，最省事 */
+s = 1.0/2.0 * g * t * t;  /* 两个都写成小数，最保险 */</code></pre>
+
+  <h2>顺带记住的几个</h2>
+
+  <ul>
+    <li><code>5/2</code> → 2（不是 2.5）</li>
+    <li><code>5.0/2</code> → 2.5</li>
+    <li><code>7/2</code> → 3（不是 3.5，也不是 4，是<strong>往下砍</strong>不是四舍五入）</li>
+    <li><code>-7/2</code> → -3（往 0 的方向砍）</li>
+  </ul>
+
+  <div class="box box-tip">
+    <span class="label">记住这一条</span>
+    <p>看到除法先停半秒：斜杠两边的数，是整数还是小数？只要两边都是整数，小数就一定没了。想留小数，就把其中随便一个写成带点的形式。</p>
+  </div>
+
+  <a class="back" href="../index.html">← 回到文章列表</a>
+</article>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>

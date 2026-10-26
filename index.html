@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YvonneHuang 的编程笔记</title>
+<meta name="description" content="一个零基础选手的 C 语言踩坑实录">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="index.html">YvonneHuang 的编程笔记</a>
+      <div class="nav-links">
+        <a href="index.html">文章</a>
+        <a href="about.html">关于</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>把每一个坑，都记下来</h1>
+    <p>我是一个编程零基础的初学者，正在用 C 语言一道一道地刷 OJ 题。
+       这个博客不写教程，只记录我自己真实踩过的坑——那些让我盯着屏幕发呆半小时，
+       最后发现原因简单得可笑的错误。</p>
+    <div class="meta-line">共 5 篇 · 更新于 2026 年 10 月</div>
+  </section>
+
+  <div class="section-title">全部文章</div>
+
+  <ul class="post-list">
+    <li class="post-item">
+      <a href="posts/01-edit-compile-run.html">
+        <h2>改了代码，为什么运行结果没变？</h2>
+        <div class="desc">我改了公式、按了保存，输入 6 却还是得到 180。原来「编辑、编译、运行」是三件完全独立的事。</div>
+        <div class="tagrow"><span class="tag">C 语言</span><span class="tag">初学者</span>2026-10-20</div>
+      </a>
+    </li>
+
+    <li class="post-item">
+      <a href="posts/02-scanf-ampersand.html">
+        <h2>scanf 里那个 &amp;，到底是什么东西？</h2>
+        <div class="desc">少了它程序直接崩溃，报 SIGTRAP。搞懂「地址」这个概念之后，我才知道函数参数传的到底是什么。</div>
+        <div class="tagrow"><span class="tag">C 语言</span><span class="tag">指针</span>2026-10-21</div>
+      </a>
+    </li>
+
+    <li class="post-item">
+      <a href="posts/03-integer-division.html">
+        <h2>1 除以 2 居然等于 0</h2>
+        <div class="desc">物理公式算出来永远是 0，我查了半天公式，最后发现问题出在「整数除法会直接把小数扔掉」。</div>
+        <div class="tagrow"><span class="tag">C 语言</span><span class="tag">数据类型</span>2026-10-22</div>
+      </a>
+    </li>
+
+    <li class="post-item">
+      <a href="posts/04-output-format.html">
+        <h2>一个空格引发的「答案错误」</h2>
+        <div class="desc">样例输出我肉眼看着一模一样，OJ 却判全错。原来它是逐个字符比对的，多一个空格都不行。</div>
+        <div class="tagrow"><span class="tag">OJ</span><span class="tag">输出格式</span>2026-10-24</div>
+      </a>
+    </li>
+
+    <li class="post-item">
+      <a href="posts/05-error-line.html">
+        <h2>报错指向的那一行，不一定是出错的那一行</h2>
+        <div class="desc">编译器说第 5 行有问题，我看了半天第 5 行，真凶却在第 4 行末尾多出来的那个分号。</div>
+        <div class="tagrow"><span class="tag">调试</span><span class="tag">编译错误</span>2026-10-25</div>
+      </a>
+    </li>
+  </ul>
+</main>
+
+<footer>
+  <div class="wrap">用 AI 助手一起搭的静态博客 · 托管在 GitHub Pages</div>
+</footer>
+
+</body>
+</html>
